@@ -1,29 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
-  <title>Page Title</title>
+  <title>Rock Paper Scissors</title>
 </head>
 <body>
+  <button class="game-buttons">Rock</button>
+  <button class="game-buttons">Paper</button>
+  <button class="game-buttons">Scissors</button>
+  <div>
+    <h1 class="user-choice">...</h1>
+    <h1 class="comp-choice">...</h1>
+    <h1 class="user-points">0</h1>
+    <h1 class="comp-points">0</h1>
+  </div>
   <script>
-    function add7(num)
+    let buttons = document.querySelectorAll('.game-buttons');
+    buttons.forEach((b) => {
+      
+      b.addEventListener('click', () =>
+      {
+        playRound(b.textContent, getComputerChoice());
+      });
+    });
+    //playRound(b.textContent, getComputerChoice)
+    let userChoiceUI = document.querySelector('.user-choice');
+    let compChoiceUI = document.querySelector('.comp-choice');
+    let userPointsUI = document.querySelector('.user-points');
+    let userPoints = 0;
+    let compPointsUI = document.querySelector('.comp-points');
+    let compPoints = 0;
+  
+    function getComputerChoice()
     {
-      return num + 7;
+      console.log("computer choice");
+      let max = 2;
+      let min = 0;
+      let val = Math.floor(Math.random() * (max - min + 1) + min);
+      if(val == 0)
+      {
+        return "Rock";
+      } 
+      else if(val == 1)
+      {
+        return "Paper";
+      }
+      else
+      {
+        return "Scissors";
+      }
     }
-    function multiply(num1, num2)
+    function playRound(playerSelection, computerSelection)
     {
-      return num1 * num2;
+      userChoiceUI.textContent = playerSelection;
+      compChoiceUI.textContent = computerSelection;
+      //player wins
+      if(playerSelection.toLowerCase() == "rock" && computerSelection.toLowerCase() == "scissors" || playerSelection.toLowerCase() == "scissors" && computerSelection.toLowerCase() == "paper" || playerSelection.toLowerCase() == "paper" && computerSelection.toLowerCase() == "rock")
+      {
+        console.log(playerSelection + " beats " + computerSelection + ". You win!");
+        userPoints++;
+        userPointsUI.textContent = userPoints;
+        console.log("User " + userPoints);
+      }
+      //computer wins
+      if(computerSelection.toLowerCase() == "rock" && playerSelection.toLowerCase() == "scissors" || computerSelection.toLowerCase() == "scissors" && playerSelection.toLowerCase() == "paper" || computerSelection.toLowerCase() == "paper" && playerSelection.toLowerCase() == "rock")
+      {
+        console.log(computerSelection + " beats " + playerSelection + ". You lose.");
+        compPoints++;
+        compPointsUI.textContent = compPoints;
+        console.log("Comp " + compPoints);
+      }
+      //tie
+      else
+      {
+        console.log("Oh. It was a tie.");
+      }
+      if(userPoints >= 5)
+      {
+        userPointsUI.textContent = userPoints;
+        compPointsUI.textContent = compPoints;
+        userPoints = 0;
+        compPoints = 0;
+        setTimeout(function() 
+        {
+  	      alert("You are the winner!");
+          userPointsUI.textContent = userPoints;
+          compPointsUI.textContent = compPoints;
+        },10)
+      }
+      else if(compPoints >= 5)
+      {
+        userPointsUI.textContent = userPoints;
+        compPointsUI.textContent = compPoints;
+        userPoints = 0;
+        compPoints = 0;
+        setTimeout(function() 
+        {
+  	      alert("Sorry, the computer won.");
+          userPointsUI.textContent = userPoints;
+          compPointsUI.textContent = compPoints;
+        },10)
+      }
     }
-    function capitalize(str)
+    function winner()
     {
-      return str[0].toUpperCase();
+      
     }
-    function lastLetter(str)
-    {
-      return str[str.length - 1];
-    }
-    let val = 1;
-    console.log(add7(val));
   </script>
+
+  
 </body>
 </html>
